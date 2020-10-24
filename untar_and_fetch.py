@@ -184,11 +184,11 @@ def main(args):
             i += 1
             continue
         if cmd == "--misc":
-            MISC_FOLDER = args[i]
+            MISC_FOLDER = args[i].strip("").translate({ord(i) : None for i in "./"})
             i += 1
             continue
         if cmd == "--moss":
-            MOSS_FOLDER = args[i]
+            MOSS_FOLDER = args[i].strip("").translate({ord(i) : None for i in "./"})
             i += 1
             continue
         if cmd == "-h" or cmd == "--help":
