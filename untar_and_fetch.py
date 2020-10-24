@@ -51,8 +51,8 @@ clkinit.c,
 sleep.c,
 proccpuuse.c
 """
-MISC_FOLDER = "./misc"
-MOSS_FOLDER = "./moss"
+MISC_FOLDER = "misc"
+MOSS_FOLDER = "moss"
 
 # The number of concurrent workers equals the number of CPU threads.
 NUM_WORKERS = multiprocessing.cpu_count()
