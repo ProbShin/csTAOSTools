@@ -23,16 +23,16 @@ options:
 ### Demo:
 ```
 $> ls lab3/
-foo.z
-bar.z
+foo.Z
+bar.Z
 $> ./untar_and_fetch.py ./lab3
 $> ls lab3/
 moss/
  |- foo/ : contains target files
  |- boo/ : contains target files
 misc
- |- foo/ : contains the tarball and its extracted files
- |- boo  : contains the tarball and its extracted files 
+ |- foo/ : contains the foo.Z and its extracted files
+ |- boo  : contains the bar.Z and its extracted files 
 ```
  
 ### Example:
