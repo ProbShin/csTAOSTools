@@ -108,11 +108,12 @@ def extract_gzip_files():
             except Exception as e:
                 failed.append((futures[future], str(e)))
     print(Colors.MAGENTA+"extract done (into %s/%s/ folder"%(os.getcwd(), MISC_FOLDER)+Colors.DEFAULT)
-    print("Success: %d / %d"%(num_success, len(submission)))
+    print(Colors.GREEN + "Success: %d / %d"%(num_success, len(submission))+Colors.DEFAULT)
+    print(Colors.Green + "Failed: %d"%len(failed) + Colors.DEFAULT)
     if failed:
         print("Failures:")
         for e in sorted(failed):
-            print(" %s : %s"%e)
+            print("|- %s : %s"%e)
     return
 
 '''
@@ -129,6 +130,7 @@ def collect_per_student(student, targets):
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (out,err)=p.communicate()
         found = sorted([ (f[f.rfind("/")+1:], f) for f in out.decode().strip().split() ])
+        num_find_files += len(found)
         for i, (dst, src) in enumerate(found):
             while os.path.isfile(dst):
                 dst = 'a'+dst
@@ -157,6 +159,7 @@ def collect_targets(targets):
                 future.result()
             except Exception as e:
                 warning.append((futures[future], str(e)))
+    print("")
     print(Colors.MAGENTA+"collected result stored in "+Colors.YELLOW+"'%s/%s/'"%(os.getcwd(), MOSS_FOLDER)+Colors.DEFAULT)
     if warning:
         for e in sorted(warning):
