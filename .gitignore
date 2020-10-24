@@ -1,3 +1,6 @@
-misc/  # for test case and debug
+# used for debug and test case
+misc/ 
 
-.idea  # IDE
+# IDE configures
+.idea 
+
