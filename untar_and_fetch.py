@@ -4,7 +4,7 @@ __author__ = "xin cheng"
 
 Usage=\
 '''
-1. extract all *.z within a gaven folder.  (optional)
+1. extract all *.z within a given folder.  (optional)
 2. collect all TARGET_FILES and put them under folder 'moss'
 P.S. Thanks "xb" for his ideas.
 
@@ -86,7 +86,7 @@ def extract_single_gzip(s):
     tarball = path+"/"+s
     os.makedirs(path, exist_ok=True)
     os.rename(s, tarball)
-    print("untar -xf %s -C %s"%(s, path))
+    print("untar -xf %s -C %s"%(s, path), flush=True)
     subprocess.run(["tar", "-xf", tarball, "-C", path])
     return
 
@@ -122,23 +122,23 @@ def collect_per_student(student, targets):
     src_path = './%s/%s'%(MISC_FOLDER, student)
     dst_path = './%s/%s'%(MOSS_FOLDER, student)
     os.makedirs(dst_path, exist_ok=True)
-    warning = ""
+    missing_target = []
     num_find_files = 0
     for t in targets:
         p = subprocess.Popen(["find", src_path, "-type", "f", "-regex", ".*/"+t],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         (out,err)=p.communicate()
-        found = out.decode().strip().split()
+        found = sorted([ (f[f.rfind("/")+1:], f) for f in out.decode().strip().split() ])
+        for i, (dst, src) in enumerate(found):
+            while os.path.isfile(dst):
+                dst = 'a'+dst
+            os.rename(src, "%s/%s"%(dst_path, dst))
         if not found:
-            warning += " %s"%t
-        else:
-            num_find_files += len(found)
-            for f in found:
-                os.rename(f, dst_path+"/"+f[f.rfind("/")+1:])
+            missing_target.append(t)
 
-    print("%s find %d"%(student, num_find_files))
-    if warning:
-        raise Exception("cannot find '%s'"%warning)
+    print("%s No.TargetsFind %d"%(student, num_find_files))
+    if missing_target:
+        raise Exception("cannot find '%s'"%(' '.join(missing_target)))
     return
 
 '''
