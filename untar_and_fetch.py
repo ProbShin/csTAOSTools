@@ -109,7 +109,7 @@ def extract_gzip_files():
                 failed.append((futures[future], str(e)))
     print(Colors.MAGENTA+"extract done (into %s/%s/ folder"%(os.getcwd(), MISC_FOLDER)+Colors.DEFAULT)
     print(Colors.GREEN + "Success: %d / %d"%(num_success, len(submission))+Colors.DEFAULT)
-    print(Colors.Green + "Failed: %d"%len(failed) + Colors.DEFAULT)
+    print(Colors.GREEN + "Failed: %d"%len(failed) + Colors.DEFAULT)
     if failed:
         print("Failures:")
         for e in sorted(failed):
