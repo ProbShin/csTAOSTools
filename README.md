@@ -11,14 +11,15 @@ All the tasks are done in parallel.
 
 options:
     
-    ```
+    
     <submitted_path>  : is a folder contains all students submitted .z
     -t <TARGET_FILES> : optional, indicate the files collect to moss
-                        TARGET_FILES i.e. "create.c process.h"
+                        i.e. -t "create.c process.h main.c .*lab3.*.[pP][dD][fF]"
     --misc  <misc folder name>  : change the default misc folder name 
     --moss  <moss folder name>  : change the default moss folder name
     -h / --help       : print usage.
-    ```
+    
+
 ### Demo:
 ```
 $> ls lab3/
