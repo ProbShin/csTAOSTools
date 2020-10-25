@@ -26,9 +26,12 @@ $> ls lab3/
 moss/
  |- foo/ : contains target files
  |- boo/ : contains target files
-misc
+xtrct/
  |- foo/ : contains the tarball and its extracted files
  |- boo  : contains the tarball and its extracted files 
+tarball/
+ |- foo.Z
+ |- bar.Z
  
 Example:
 $> ./untar_and_fetch.py /lab3
@@ -51,8 +54,9 @@ clkinit.c,
 sleep.c,
 proccpuuse.c
 """
-MISC_FOLDER = "misc"
+MISC_FOLDER = "xtrct"
 MOSS_FOLDER = "moss"
+TARB_FOLDER = "tarb"
 
 # The number of concurrent workers equals the number of CPU threads.
 NUM_WORKERS = multiprocessing.cpu_count()
@@ -82,12 +86,13 @@ for student s, move tarball into 'misc' folder and extract
 '''
 def extract_single_gzip(s):
     student = s[:-2]
-    path = "./%s/%s"%(MISC_FOLDER,student)
-    tarball = path+"/"+s
-    os.makedirs(path, exist_ok=True)
-    os.rename(s, tarball)
-    print("untar -xf %s -C %s"%(s, path), flush=True)
-    subprocess.run(["tar", "-xf", tarball, "-C", path])
+    extract_path = "./%s/%s"%(MISC_FOLDER,student)
+    tarball_path = "./%s/%s"%(TARB_FOLDER,student)
+    os.makedirs(extract_path, exist_ok=True)
+    os.makedirs(tarball_path, exist_ok=True)
+    print("untar -xf %s -C %s" % (s, extract_path), flush=True)
+    subprocess.run(["tar", "-xf", s, "-C", extract_path])
+    os.rename(s, "%s/%s"%(tarball_path,s))
     return
 
 '''
